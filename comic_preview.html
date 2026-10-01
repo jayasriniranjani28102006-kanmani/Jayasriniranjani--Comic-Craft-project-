@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ comic.title }} · ComicCraft</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<main class="container">
+  <section class="hero compact">
+    <p class="eyebrow">YOUR COMIC</p>
+    <h1>{{ comic.title }}</h1>
+    <div class="actions">
+      <a class="button" href="{{ comic.pdf_path | replace('\\', '/') | replace('static/', '/static/') }}" download>Download PDF</a>
+      <a class="button secondary" href="/">Create Another</a>
+    </div>
+  </section>
+
+  {% for panel in comic.panels %}
+  <article class="panel card">
+    <div class="panel-head">
+      <span>Panel {{ panel.panel_number }}</span>
+      <h2>{{ panel.title }}</h2>
+    </div>
+    <img src="/static/panels/{{ panel.image_path.split('/')[-1] }}" alt="{{ panel.title }}">
+    <p class="scene">{{ panel.scene_description }}</p>
+    {% if panel.caption %}<p><strong>Caption:</strong> {{ panel.caption }}</p>{% endif %}
+    {% if panel.narration %}<p><strong>Narration:</strong> {{ panel.narration }}</p>{% endif %}
+    {% if panel.dialogue %}<p><strong>Dialogue:</strong> {{ panel.dialogue }}</p>{% endif %}
+  </article>
+  {% endfor %}
+</main>
+</body>
+</html>
